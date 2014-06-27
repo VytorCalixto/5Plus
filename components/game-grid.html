@@ -1,0 +1,17 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="grid-row.html">
+
+<polymer-element name="game-grid" attributes="rows">
+    <template>
+        <div layout vertical center>
+            <template repeat="{{row in rows}}">
+                <grid-row cells="{{row.cells}}"></grid-row>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer('game-grid', {
+            rows: [[{}]]
+        });
+    </script>
+</polymer-element>

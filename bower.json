@@ -1,0 +1,26 @@
+{
+  "name": "FiveOrMore",
+  "version": "1.0.0",
+  "authors": [
+    "VytorCalixto <vytorcalixto@gmail.com>"
+  ],
+  "description": "A simple five or more mobile game made with Polymer",
+  "main": "index.html",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "mobile",
+    "polymer",
+    "ionic",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

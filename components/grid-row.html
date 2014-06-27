@@ -1,0 +1,20 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="grid-cell.html">
+
+<polymer-element name="grid-row" attributes="cells">
+    <template>
+        <div layout horizontal center>
+            <template repeat="{{cell in cells}}">
+                <div>
+                    <grid-cell color="{{cell.color}}"></grid-cell>
+                </div>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer('grid-row', {
+            //If nothing is passed, line will be all blank
+            cells: [{color: 'whitesmoke'}]
+        });
+    </script>
+</polymer-element>
