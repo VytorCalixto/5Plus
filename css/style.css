@@ -2,3 +2,12 @@
     display: table;
     margin: auto auto;
 }
+
+ion-content{
+    background: url(../img/blurred7.jpg);
+    background-size: cover;
+}
+
+game-grid{
+    padding-bottom: 15px;
+}

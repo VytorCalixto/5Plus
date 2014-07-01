@@ -1,0 +1,29 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="core-cell.html">
+
+<polymer-element name="next-colors-bar" attributes="colors">
+    <template>
+        <style>
+            h1{
+                padding-right: 3px;
+            }
+        </style>
+        <div layout horizontal center>
+            <h1>Next Colors:</h1>
+            <template repeat="{{color in colors}}">
+                <core-cell color="{{color}}"></core-cell>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer('next-colors-bar',{
+            /* Colors of the bar
+             * 
+             * @attribute colors
+             * @type array
+             * @default ['whitesmoke']
+             */
+            colors: ['whitesmoke']
+        });
+    </script>
+</polymer-element>

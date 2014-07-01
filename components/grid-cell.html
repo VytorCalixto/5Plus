@@ -1,34 +1,81 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="core-cell.html">
 
-<polymer-element name="grid-cell" attributes="color" touch-action="scroll">
+<polymer-element name="grid-cell" extends="core-cell" attributes="index selected">
     <template>
         <style>
             :host {
                 display: block;
+                position: relative;
                 background: {{background}};
-                padding: 10px;
                 width: 3em;
                 height: 3em;
                 border-radius: 8px;
-                font-size: 1rem;
+                font-size: 1.2rem;
                 font-weight: 300;
             }
 
-            .cell{
-                background: {{color}};
-                height: 100%;
-                width: 100%;
-                border-radius: 50%;
+            #ripple {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                color: {{rippleColor}};
+                pointer-events: none;
             }
         </style>
-        <div class="cell" layout horizontal center>
-        </div>
+        <!--Renders the core-cell template-->
+        <shadow></shadow>
+        <paper-ripple id="ripple" fit class="circle" opacityDecayVelocity="2.5"></paper-ripple>
     </template>
     <script>
         Polymer('grid-cell', {
-            background: "whitesmoke",
-            /*Makes default color same as background*/
-            color: "whitesmoke"
+            /* The cell index
+             * 
+             * @attribute index
+             * @type number
+             * @default 0
+             */
+            index: 0,
+            /* If true, the button is indicated as selected
+             * 
+             * @attibute selected
+             * @type boolean
+             * @default false
+             */
+            selected: false,
+            rippleColor: '#768789',
+            eventDelegates: {
+                down: 'downAction',
+                tap: 'upAction',
+                hold: 'upAction'
+            },
+            downAction: function(e) {
+                this.$.ripple.downAction(e);
+            },
+            upAction: function(e) {
+                this.$.ripple.upAction();
+                this.selected = !this.selected;
+                this.fire('selected', {color: this.color, id: this.index, 
+                    selected: this.selected});
+            },
+            changeCellColor: function(color){
+                this.background = color;
+                if(this.color === 'whitesmoke' || this.color === '#768789'){
+                    this.color = color;
+                }
+            },
+            selectedChanged: function() {
+                if (this.selected) {
+                    this.changeCellColor('#768789');
+                    this.rippleColor = 'whitesmoke';
+                } else {
+                    this.changeCellColor('whitesmoke');
+                    this.rippleColor = '#768789';
+                }
+            }
         });
     </script>
 </polymer-element>

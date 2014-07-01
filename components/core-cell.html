@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="core-cell" attributes="color background">
+    <template>
+        <style>
+            :host {
+                display: block;
+                background: {{background}};
+                padding: 3px;
+                width: 2.5em;
+                height: 2.5em;
+                border-radius: 8px;
+                font-size: 1em;
+                font-weight: 300;
+            }
+
+            .cell{
+                background: {{color}};
+                height: 100%;
+                width: 100%;
+                border-radius: 50%;
+            }
+        </style>
+        <div class="cell" layout horizontal center>
+        </div>
+    </template>
+    <script>
+        Polymer('core-cell', {
+            /* The background color of the cell
+             * 
+             * @attribute background
+             * @type string
+             * @default 'whitesmoke'
+             */
+            background: 'whitesmoke',
+            /* The color of the cell
+             * 
+             * @attribute color
+             * @type string
+             * @default 'whitesmoke'
+             * */
+            color: this.background
+        });
+    </script>
+</polymer-element>

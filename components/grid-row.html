@@ -5,16 +5,21 @@
     <template>
         <div layout horizontal center>
             <template repeat="{{cell in cells}}">
-                <div>
-                    <grid-cell color="{{cell.color}}"></grid-cell>
-                </div>
+                <grid-cell color="{{cell.color}}" index="{{cell.id}}" selected="{{cell.selected}}"></grid-cell>
             </template>
         </div>
     </template>
     <script>
         Polymer('grid-row', {
-            //If nothing is passed, line will be all blank
-            cells: [{color: 'whitesmoke'}]
+            publish: {
+                /*The cells of a row
+                 * 
+                 * @attribute cells
+                 * @type array
+                 * @default [{color: 'whitesmoke', x: 0, y:0, selected: false}]
+                 */
+                cells: [{color: 'whitesmoke', x: 0, y:0, selected: false}]
+            }
         });
     </script>
 </polymer-element>

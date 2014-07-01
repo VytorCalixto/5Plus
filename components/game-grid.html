@@ -5,12 +5,18 @@
     <template>
         <div layout vertical center>
             <template repeat="{{row in rows}}">
-                <grid-row cells="{{row.cells}}"></grid-row>
+                <grid-row cells="{{row}}"></grid-row>
             </template>
         </div>
     </template>
     <script>
         Polymer('game-grid', {
+            /* The array of rows of the grid
+             * 
+             * @attribute rows
+             * @type array
+             * @default [[{}]] //(empty)
+             */
             rows: [[{}]]
         });
     </script>
