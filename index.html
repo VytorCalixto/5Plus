@@ -9,10 +9,11 @@
 
         <link href="ionic/css/ionic.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
-        <script src="ionic/js/ionic.bundle.js"></script>
         <script src="bower_components/platform/platform.js"></script>
+        <script src="ionic/js/ionic.bundle.js"></script>
         <link rel="import" href="components/game-grid.html">
         <link rel="import" href="components/next-colors-bar.html">
+        <link rel="import" href="components/game-score.html">
 
         <script src="cordova.js"></script>
 
@@ -29,7 +30,10 @@
             </ion-header-bar>
             <ion-content class="padding" ng-controller="GameCtrl">
                 <next-colors-bar></next-colors-bar>
-                <h2>Score: {{score}}</h2>
+                <game-score></game-score>
+                <div ng-show="{{gameOver}}">
+                    <h1>Game Over</h1>
+                </div>
                 <game-grid class="center"></game-grid>
             </ion-content>
         </ion-pane>

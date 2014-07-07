@@ -1,0 +1,18 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="game-score" attributes="value">
+    <template>
+        <h2>Score: {{value}}</h2>
+    </template>
+    <script>
+        Polymer('game-score', {
+            /* The value of the score
+             * 
+             * @attribute value
+             * @type int
+             * @default 0
+             */
+            value: 0
+        });
+    </script>
+</polymer-element>

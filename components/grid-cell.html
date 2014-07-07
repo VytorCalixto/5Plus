@@ -6,14 +6,10 @@
     <template>
         <style>
             :host {
-                display: block;
                 position: relative;
-                background: {{background}};
                 width: 3em;
                 height: 3em;
-                border-radius: 8px;
                 font-size: 1.2rem;
-                font-weight: 300;
             }
 
             #ripple {
@@ -50,7 +46,7 @@
             eventDelegates: {
                 down: 'downAction',
                 tap: 'upAction',
-                hold: 'upAction'
+                hold: 'holdAction'
             },
             downAction: function(e) {
                 this.$.ripple.downAction(e);
@@ -60,6 +56,9 @@
                 this.selected = !this.selected;
                 this.fire('selected', {color: this.color, id: this.index, 
                     selected: this.selected});
+            },
+            holdAction: function(e){
+                this.$.ripple.upAction();
             },
             changeCellColor: function(color){
                 this.background = color;

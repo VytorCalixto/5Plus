@@ -13,10 +13,18 @@ fom.factory('Colors', function(){
             return colors;
         },
         getByPosition: function(position){
-            return colors[position];
+            return getByPosition(position);
         },
         getBlank: function(){
             return blank;
+        },
+        getRandomColor: function(){
+            var index = Math.floor((Math.random() * 5)) + 1;
+            return getByPosition(index);
         }
     };
+    
+    function getByPosition(position){
+        return colors[position];
+    }
 });
