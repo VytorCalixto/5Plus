@@ -4,11 +4,10 @@ fom.controller('GameCtrl', function($scope, Grid, Colors) {
     var numberOfColors;
     var cellsSelected = [];
     var score;
-    $scope.gameOver = false;
     initializeGame();
 
     function initializeGame() {
-        Grid.setGridSize(5); //later I'll do it with different difficulties
+        Grid.setGridSize(9); //later I'll do it with different difficulties
         Grid.initializeGrid();
         numberOfColors = 3;
         score = 0;
@@ -18,8 +17,9 @@ fom.controller('GameCtrl', function($scope, Grid, Colors) {
         document.querySelector('game-grid').rows = Grid.getGrid();
     }
 
-    /*
-     * raffle next colors
+    /**
+     * Randomly pic the defined number of colors
+     * @function drawNextColors
      */
     function drawNextColors() {
         nextColors = [];
@@ -91,7 +91,7 @@ fom.controller('GameCtrl', function($scope, Grid, Colors) {
          * After swapping the cells colors, now the colored cell is in 
          * cellsSelected[1] position. But it's color is in cellsSelected[0]
          */
-        //Make a cell to pass to the functions with the correct position and color
+        //Create a cell to pass to the functions with the correct position and color
         var cell = cellsSelected[1];
         cell.color = cellsSelected[0].color;
         checkForFiveOrMore(cell);
@@ -115,8 +115,8 @@ fom.controller('GameCtrl', function($scope, Grid, Colors) {
     function checkForFiveOrMore(cell) {
         score += checkLine(cell) * 2;
         score += checkColumn(cell) * 2;
-//        score += checkPrimaryDiagonal(cell);
-//        score += checkSecondaryDiagonal(cell);
+        score += checkPrimaryDiagonal(cell) * 2;
+        score += checkSecondaryDiagonal(cell) * 2;
         document.querySelector('game-score').value = score;
     }
 
@@ -140,7 +140,7 @@ fom.controller('GameCtrl', function($scope, Grid, Colors) {
     }
 
     function checkColumn(cell) {
-        var i = getCellX(cell), j = getCellX(cell), y = getCellY(cell);
+        var i = getCellX(cell) - 1, j = getCellX(cell) + 1, y = getCellY(cell);
         while ((i >= 0) && (cell.color === Grid.getCell(i, y).color)) {
             i--;
         }
@@ -167,15 +167,70 @@ fom.controller('GameCtrl', function($scope, Grid, Colors) {
          *                  ...
          *                      [rightCell]
          */
-        while ((getCellX(leftCell) >0) && (getCellY(leftCell)>0) && (leftCell.color === cell.color)) {
+        while ((getCellX(leftCell) - 1 >= 0) && (getCellY(leftCell) - 1 >= 0) &&
+                (leftCell.color === cell.color)) {
             leftCell = Grid.getCell(getCellX(leftCell) - 1, getCellY(leftCell) - 1);
         }
-        leftCell = Grid.getCell(getCellX(leftCell)+1, getCellY(leftCell)+1);
-        
-        while ((getCellX(rightCell) < Grid.getGridSize()) && (getCellY(rightCell) < Grid.getGridSize()) && (rightCell.color === cell.color)) {
+        if (leftCell.color !== cell.color) {
+            leftCell = Grid.getCell(getCellX(leftCell) + 1, getCellY(leftCell) + 1);
+        }
+
+        while ((getCellX(rightCell) + 1 < Grid.getGridSize()) &&
+                (getCellY(rightCell) + 1 < Grid.getGridSize()) &&
+                (rightCell.color === cell.color)) {
             rightCell = Grid.getCell(getCellX(rightCell) + 1, getCellY(rightCell) + 1);
         }
-        rightCell = Grid.getCell(getCellX(rightCell)-1, getCellY(rightCell)-1);
+        if (rightCell.color !== cell.color) {
+            rightCell = Grid.getCell(getCellX(rightCell) - 1, getCellY(rightCell) - 1);
+        }
+        if (getCellX(rightCell) - getCellX(leftCell) >= 4) {
+            var rmCell;
+            for (rmCell = leftCell; rmCell !== rightCell; ) {
+                Grid.removeCell(rmCell);
+                rmCell = Grid.getCell(getCellX(rmCell) + 1, getCellY(rmCell) + 1);
+            }
+            Grid.removeCell(rmCell);
+            return getCellX(rightCell) - getCellX(leftCell) + 1;
+        }
+        return 0;
+    }
+
+    function checkSecondaryDiagonal(cell) {
+        var leftCell = cell, rightCell = cell;
+        /*
+         *                      [rightCell]
+         *                  ...
+         *           [cell]
+         *        ...
+         *[leftCell]
+         */
+        while ((getCellX(leftCell) +1 < Grid.getGridSize()) && (getCellY(leftCell) - 1 >= 0) &&
+                (leftCell.color === cell.color)) {
+            leftCell = Grid.getCell(getCellX(leftCell) + 1, getCellY(leftCell) - 1);
+        }
+        if (leftCell.color !== cell.color) {
+            leftCell = Grid.getCell(getCellX(leftCell) - 1, getCellY(leftCell) + 1);
+        }
+
+        while ((getCellX(rightCell) - 1 >= 0) &&
+                (getCellY(rightCell) + 1 < Grid.getGridSize()) &&
+                (rightCell.color === cell.color)) {
+            rightCell = Grid.getCell(getCellX(rightCell) - 1, getCellY(rightCell) + 1);
+        }
+        if (rightCell.color !== cell.color) {
+            rightCell = Grid.getCell(getCellX(rightCell) + 1, getCellY(rightCell) - 1);
+        }
+        
+        if (getCellY(rightCell) - getCellY(leftCell) >= 4) {
+            var rmCell;
+            for (rmCell = leftCell; rmCell !== rightCell; ) {
+                Grid.removeCell(rmCell);
+                rmCell = Grid.getCell(getCellX(rmCell) - 1, getCellY(rmCell) + 1);
+            }
+            Grid.removeCell(rmCell);
+            return getCellY(rightCell) - getCellY(leftCell) + 1;
+        }
+        return 0;
     }
 
     function unselect(cell) {

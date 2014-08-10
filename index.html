@@ -24,18 +24,8 @@
         <title>5+</title>
     </head>
     <body>
-        <ion-pane>
-            <ion-header-bar class="bar-stable">
-                <h1 class="title">5+</h1>
-            </ion-header-bar>
-            <ion-content class="padding" ng-controller="GameCtrl">
-                <next-colors-bar></next-colors-bar>
-                <game-score></game-score>
-                <div ng-show="{{gameOver}}">
-                    <h1>Game Over</h1>
-                </div>
-                <game-grid class="center"></game-grid>
-            </ion-content>
-        </ion-pane>
+        <ion-nav-bar class="bar-stable nav-title-slide-ios7"></ion-nav-bar>
+    
+        <ion-nav-view></ion-nav-view>
     </body>
 </html>

@@ -7,9 +7,43 @@
         <style>
             :host {
                 position: relative;
-                width: 3em;
-                height: 3em;
-                font-size: 1.2rem;
+                width: 3.9em;
+                height: 3.9em;
+            }
+
+            @media screen and (max-width: 1200px){
+                :host{
+                    width: 3.9em;
+                    height: 3.9em;
+                }
+            }
+            
+            @media screen and (max-width: 1024px){
+                :host{
+                    width: 3.2em;
+                    height: 3.2em;
+                }
+            }
+            
+            @media screen and (max-width: 768px){
+                :host{
+                    width: 3.5em;
+                    height: 3.5em;
+                }
+            }
+            
+            @media screen and (max-width: 480px){
+                :host{
+                    width: 2.5em;
+                    height: 2.5em;
+                }
+            }
+            
+            @media screen and (max-width: 320px){
+                :host{
+                    width: 2em;
+                    height: 2em;
+                }
             }
 
             #ripple {
@@ -28,14 +62,14 @@
     </template>
     <script>
         Polymer('grid-cell', {
-            /* The cell index
+            /** The cell index
              * 
              * @attribute index
              * @type number
              * @default 0
              */
             index: 0,
-            /* If true, the button is indicated as selected
+            /** If true, the button is indicated as selected
              * 
              * @attibute selected
              * @type boolean
@@ -46,23 +80,24 @@
             eventDelegates: {
                 down: 'downAction',
                 tap: 'upAction',
-                hold: 'holdAction'
+                hold: 'endRipple',
+                trackend: 'endRipple'
             },
             downAction: function(e) {
                 this.$.ripple.downAction(e);
             },
             upAction: function(e) {
-                this.$.ripple.upAction();
+                this.endRipple();
                 this.selected = !this.selected;
-                this.fire('selected', {color: this.color, id: this.index, 
+                this.fire('selected', {color: this.color, id: this.index,
                     selected: this.selected});
             },
-            holdAction: function(e){
+            endRipple: function(e) {
                 this.$.ripple.upAction();
             },
-            changeCellColor: function(color){
+            changeCellColor: function(color) {
                 this.background = color;
-                if(this.color === 'whitesmoke' || this.color === '#768789'){
+                if (this.color === 'whitesmoke' || this.color === '#768789') {
                     this.color = color;
                 }
             },

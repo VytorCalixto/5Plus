@@ -13,7 +13,21 @@
                 font-size: 1em;
                 font-weight: 300;
             }
-
+            
+            @media screen and (max-width: 768px){
+                :host{
+                    width: 2em;
+                    height: 2em;
+                }
+            }
+            
+            @media screen and (max-width: 320px){
+                :host{
+                    width: 0.5em;
+                    height: 0.5em;
+                }
+            }
+            
             .cell{
                 background: {{color}};
                 height: 100%;
@@ -26,14 +40,14 @@
     </template>
     <script>
         Polymer('core-cell', {
-            /* The background color of the cell
+            /** The background color of the cell
              * 
              * @attribute background
              * @type string
              * @default 'whitesmoke'
              */
             background: 'whitesmoke',
-            /* The color of the cell
+            /** The color of the cell
              * 
              * @attribute color
              * @type string

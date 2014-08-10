@@ -9,7 +9,7 @@
             }
         </style>
         <div layout horizontal center>
-            <h1>Next Colors:</h1>
+            <!--<h1>Next Colors:</h1>-->
             <template repeat="{{color in colors}}">
                 <core-cell color="{{color}}"></core-cell>
             </template>
@@ -17,13 +17,19 @@
     </template>
     <script>
         Polymer('next-colors-bar',{
-            /* Colors of the bar
+            /** Colors of the bar
              * 
              * @attribute colors
              * @type array
              * @default ['whitesmoke']
              */
-            colors: ['whitesmoke']
+            colors: ['whitesmoke'],
+            eventDelegates: {
+                tap: 'tapAction'
+            },
+            tapAction: function(e){
+                this.fire('tapped');
+            }
         });
     </script>
 </polymer-element>
